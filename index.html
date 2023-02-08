@@ -51,8 +51,8 @@
             data() {
                 return {
                     title: 'login form',
-                    email: "dasd",
-                    password: "dad",
+                    email: "",
+                    password: "",
                     emailLabel: "Email",
                     passwordLabel: "Password",
 
@@ -79,7 +79,7 @@
 
                     },
                     set(value) {
-                        console.log(value)
+                        this.$emit('update:modelValue', value)
 
                     }
                 }
