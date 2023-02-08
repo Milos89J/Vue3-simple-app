@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Vue3</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <login-page />
+        {{ newvariable }}
+        <input @keyup.enter="test(words)" v-model="newvariable" />
+        <hr />
+        <button @click="toggle">Show</button>
+        <div v-if="isVisible" class="box"></div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        let app = Vue.createApp({
+            data() {
+                return {
+                    newvariable: 'Vue3!',
+                    isVisible: true,
+                    words: 'milos',
+                }
+            },
+            methods: {
+                toggle() {
+                    this.isVisible = !this.isVisible
+                },
+                test(words) {
+                    console.log(words)
+                }
+            },
+        })
+        app.component('login-page', {
+            template: `
+            <form @submit.prevent="handleSubmit"> 
+                <h2> {{title}} </h2>
+                <custom-input v-model="email" :label="emailLabel"/>
+                <custom-input v-model="password" :label="passwordLabel"/>
+                <button> Log in </button>
+            </form>
+            
+            `,
+            components: ['custom-input'],
+
+            data() {
+                return {
+                    title: 'login form',
+                    email: "dasd",
+                    password: "dad",
+                    emailLabel: "Email",
+                    passwordLabel: "Password",
+
+                }
+            },
+            methods: {
+                handleSubmit() {
+                    console.log(this.email, this.password)
+                }
+            }
+        })
+        app.component('custom-input', {
+            template: `
+            <label>
+                {{ label }} 
+                <input type="text" v-model="inputValue">
+                 </label>
+            `,
+            props: ['label', 'modelValue'],
+            computed: {
+                inputValue: {
+                    get() {
+                        return this.modelValue
+
+                    },
+                    set(value) {
+                        console.log(value)
+
+                    }
+                }
+            },
+            // data() {
+            //   return {
+            //      inputValue: ""
+            // }
+            // }
+        })
+
+        app.mount('#app')
+    </script>
+</body>
+<style>
+    .box {
+        background-color: aqua;
+        height: 50px;
+        width: 50px;
+    }
+
+    input {
+        display: block;
+    }
+</style>
+
+</html>
